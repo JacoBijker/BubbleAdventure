@@ -3,14 +3,16 @@ using UnityEngine.UI;
 using System.Collections;
 using Assets.Scripts.Standalone;
 
-public class PlayerPickupPopup : MonoBehaviour {
+public class PlayerPickupPopup : MonoBehaviour
+{
     private Vector3 RealWorldPosition;
     private string Text;
     private AudioSource audioSource;
     private Text textComponent; // Reference to the Text component
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         textComponent = GetComponent<Text>();
 
         if (!textComponent)
@@ -19,24 +21,29 @@ public class PlayerPickupPopup : MonoBehaviour {
             enabled = false;
             return;
         }
-	}
-	
+    }
+
     void Awake()
     {
         Invoke("Stop", 1f);
     }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
         float yOffset = 0.2f * Time.deltaTime;
         RealWorldPosition = new Vector3(RealWorldPosition.x, RealWorldPosition.y + yOffset, RealWorldPosition.z);
         this.transform.position = Camera.main.WorldToViewportPoint(RealWorldPosition);
-        
-	}
+
+    }
 
     public void Setup(Vector3 Position, string Text, int bubbleChainCount)
     {
         RealWorldPosition = Position;
+
+        if (!textComponent)
+            textComponent = GetComponent<Text>();
+
         textComponent.text = Text;
 
         var currentFontSize = textComponent.fontSize;
